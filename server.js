@@ -14,11 +14,11 @@ const app = express();
 // connecting the database
 
 const MONGODB_URI = process.env.MONGODB_URI || config.mongoURI[app.settings.env]
-mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true  },(err)=>{
-   if (err) {
+mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true }, (err) => {
+    if (err) {
         console.log(err)
-    }else{
-       console.log(`Connected to Database: ${MONGODB_URI}`)
+    } else {
+        console.log(`Connected to Database: ${MONGODB_URI}`)
     }
 });
 
@@ -26,7 +26,7 @@ mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true 
 //let mongodb_url = 'mongodb+srv://GalleryApp:galleryapp@cluster0.ox2elsq.mongodb.net/?retryWrites=true&w=majority';
 //let dbName = 'GalleryApp';
 //mongoose.connect(`${mongodb_url}${dbName}`,{ useNewUrlParser: true , useUnifiedTopology: true }, (err)=>{
-    //if (err) console.log(err)
+//if (err) console.log(err)
 //});
 
 // test if the database has connected successfully
@@ -53,9 +53,9 @@ app.use('/image', image);
 
 
 
- 
+
 const PORT = process.env.PORT || 5000;
-app.listen(PORT,() =>{
+app.listen(PORT, () => {
     console.log(`Server is listening at http://localhost:${PORT}`)
 });
 

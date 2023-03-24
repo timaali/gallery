@@ -1,0 +1,56 @@
+pipeline{
+    agent any
+    tools { 
+    nodejs "NodeJS"
+  }
+    stages { 
+    stage('clone repository') {
+      steps { 
+        git 'https://github.com/timaali/gallery.git'  }
+    }
+  
+    stage('Build project') {
+    steps { 
+        sh 'npm install'
+  }
+}
+
+    stage('Test') {
+      steps { 
+        sh 'CI=true npm test'
+      }
+    }
+
+
+    stage('Deploy to Render') {
+    steps {
+        sh 'curl -X POST https://api.render.com/deploy/srv-cgdvhkvekgjpv7trs370?key=ZvRAXqcmiXA'
+  }
+}
+    } 
+post{
+    success{
+        emailext attachLog: true, to: 'timaali43@gmail.com',
+                 body: "Hello Ali,\nGreat job! Your tests for gallery app have passed.Build \'${env.JOB_NAME}:${env.BUILD_NUMBER}\' link:'https://gallery-ip-24g8.onrender.com\nKind regards,\nYour Jenkins Pipeline", 
+                 subject: 'Gallery App Test Passed'
+        slackSend channel: 'tima_ip1', message: "Hello Tima,  Great News: Gallery App deployed successfully - Build \'${env.JOB_NAME}:${env.BUILD_NUMBER}\' link:'https://gallery-ip-24g8.onrender.com'"
+        
+
+        
+    }
+    failure{
+        emailext attachLog: true, to: 'timaali43@gmail.com',
+                                  body: "Hello Ali,\nBad job! Your tests for gallery app have failed.Build \'${env.JOB_NAME}:${env.BUILD_NUMBER}\' link:'https://gallery-ip-24g8.onrender.com\nKind regards,\nYour Jenkins Pipeline", 
+                                  subject: 'Gallery App Test Failed'
+        slackSend channel: 'tima_ip1', message: 'Hello Tima,  Bad News: Gallery App did not deploy successfully'
+        
+    }
+    always{
+        emailext attachLog: true, to: 'timaali43@gmail.com',
+                                  body: "Hello Ali,\nOk job! Your tests for gallery app are on going.Build \'${env.JOB_NAME}:${env.BUILD_NUMBER}\' link:'https://gallery-ip-24g8.onrender.com\nKind regards,\nYour Jenkins Pipeline", 
+                                  subject: 'Gallery App Test Ongoing'
+        slackSend channel: 'tima_ip1', message: 'Hello Tima,  Great News: Deployment has started'
+        
+    }
+}
+}
