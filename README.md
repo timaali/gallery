@@ -13,7 +13,8 @@ The project implements the functionality of CI/CD using jenkins
 This project is written in:
 1. JAVASCRIPT 
 2. CSS
-3. HTML
+3. EJS
+4. html
 
 #### **PROJECT SETUP INSTRUCTIONS:** 
 Clone this repo to your desktop and begin your developing!
